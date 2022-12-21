@@ -1,14 +1,8 @@
 /**
- * DI: Dependency Injection
- * Following code shows how spring injects the `clock` dependency in your `TimeMachine` class at runtime.
- * There are 3 ways of DIs. Constructor, Setter and Field injection. This is an example of Field injection which
- * is the least recommended way of DI.
- *
- * Benefits: same as IoC as DI is a specific type IoC:
- *
- * How is spring boot doing DI?
- * - Using @Autowire annotation
- *
+ * DI: Types of Dependency Injection
+ *  - Constructor Injection
+ *  - Setter Injection
+ *  - Field Injection
  */
 package com.pscode.springbootbasics;
 
@@ -51,16 +45,50 @@ class Clock {
 }
 
 @Component
+class Color {
+	private String color = "Blue";
+
+	public String getColor() {
+		return color;
+	}
+}
+
+@Component
 class TimeMachine {
 
-	// Dependency injection using Field Injection. DON'T DO THIS. Prefer Constructor Injection instead.
+//	DI using Field Injection - NOT a preferred way of DI
+//	It is achieved through @Autowire annotation
+//	@Autowired
+	private final Clock clock; // A mandatory field
+
+	private String color = "Black"; // An optional field
+
+//	DI using Setter injection - preferred for optional fields injection and is more configurable
+//	Setter Injection is achieved through @Autowire annotation
+//	@Autowired
+//	Not a good use of Setter Injection for mandatory field `clock`
+//	public void setClock(Clock clock ) {
+//		this.clock = clock;
+//	}
+
+//	A better use of Setter Injection for an optional field `color`
 	@Autowired
-	private Clock clock;
+	public void setColor(Color color) {
+		this.color = color.getColor();
+	}
+
+//	DI using constructor injection - preferred for mandatory fields
+//	Supports immutability means now you can make `clock` a `final` variable now.. thread safe etc..
+//  @Autowired annotation is not required for Constructor Injection provided only one constructor is defined in this class
+	public TimeMachine(Clock clock, Color color) {
+		this.clock = clock;
+	}
 
 	public void whatTimeIsIt() {
 		System.out.println("-----------------------------------------------------------------------------------------j");
 		System.out.println("Welcome to the future 💡 .... Current time is... ");
 		System.out.println("-----------------------------------------------------------------------------------------j");
 		System.out.println(clock.getLocalDateTime().plusYears(1000));
+		System.out.println("My color is " + color);
 	}
 }
