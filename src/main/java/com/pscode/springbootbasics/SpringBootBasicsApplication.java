@@ -1,4 +1,8 @@
-// Code to explain Beans
+/**
+ * Following Code explains how spring creates and manages beans on your behalf. Beans are nothing but objects
+ * that are created and managed by spring for you. The container object that manages these other objects(beans) is
+ * called as the Application Context.
+ */
 package com.pscode.springbootbasics;
 
 import org.springframework.boot.SpringApplication;
@@ -14,9 +18,9 @@ public class SpringBootBasicsApplication {
 		String[] beans = applicationContext.getBeanDefinitionNames();
 
 		for (String bean: beans) {
-			System.out.println("----------------------------------------------------------------------------------------");
+			System.out.println("-------------------------------------------------------------------------------------");
 			System.out.println(bean);
-			System.out.println("----------------------------------------------------------------------------------------");
+			System.out.println("-------------------------------------------------------------------------------------");
 
 		}
 
