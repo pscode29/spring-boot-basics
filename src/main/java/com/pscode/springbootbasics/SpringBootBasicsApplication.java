@@ -1,18 +1,18 @@
 /**
- * IoC: Inversion of Control
- * Following code shows how you let spring manage your objects as a bean using @Component annotation. This
- * way you have inverted the control of your object creation and management etc. to spring.
+ * DI: Dependency Injection
+ * Following code shows how spring injects the `clock` dependency in your `TimeMachine` class at runtime.
+ * There are 3 ways of DIs. Constructor, Setter and Field injection. This is an example of Field injection which
+ * is the least recommended way of DI.
  *
- * Benefits:
- * - Allows decoupling - Domain Driven Design stuff
- * - DRY: You don't have to keep instantiating your object every time it is needed
- * - Share a resource throughout the app and don't worry about lifecycle management of objects
- * - Helps in testing by letting you mock objects easily, we will see that later.
+ * Benefits: same as IoC as DI is a specific type IoC:
  *
- * NOTE - Dependency Injection is a way of achieving IoC.
+ * How is spring boot doing DI?
+ * - Using @Autowire annotation
+ *
  */
 package com.pscode.springbootbasics;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -35,13 +35,8 @@ public class SpringBootBasicsApplication {
 
 		}
 
-//		Clock clock = new Clock();
-//		LocalDateTime localDateTime = clock.getLocalDateTime();
-//		System.out.println("localDateTime = " + localDateTime);
-
-		Clock clock = applicationContext.getBean("clock", Clock.class);
-		LocalDateTime localDateTime = clock.getLocalDateTime();
-		System.out.println("localDateTime = " + localDateTime);
+		TimeMachine timeMachine = applicationContext.getBean("timeMachine", TimeMachine.class);
+		timeMachine.whatTimeIsIt();
 
 	}
 }
@@ -52,5 +47,20 @@ class Clock {
 
 	public LocalDateTime getLocalDateTime() {
 		return localDateTime;
+	}
+}
+
+@Component
+class TimeMachine {
+
+	// Dependency injection using Field Injection. DON'T DO THIS. Prefer Constructor Injection instead.
+	@Autowired
+	private Clock clock;
+
+	public void whatTimeIsIt() {
+		System.out.println("-----------------------------------------------------------------------------------------j");
+		System.out.println("Welcome to the future 💡 .... Current time is... ");
+		System.out.println("-----------------------------------------------------------------------------------------j");
+		System.out.println(clock.getLocalDateTime().plusYears(1000));
 	}
 }
