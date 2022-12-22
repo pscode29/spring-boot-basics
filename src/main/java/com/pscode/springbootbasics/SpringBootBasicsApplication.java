@@ -1,8 +1,9 @@
 /**
- * DI: Types of Dependency Injection
- *  - Constructor Injection
- *  - Setter Injection
- *  - Field Injection
+ * This simple application is intended to learn about following topics -
+ * - Spring ApplicationContext
+ * - Beans - switch to branch what-the-beans to know more
+ * - Inversion of Control - switch to branch invert-the-control to know more
+ * - Dependency Injection - switch to branches dependency-injection and better-injections to know more
  */
 package com.pscode.springbootbasics;
 
